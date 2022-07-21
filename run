@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euxo pipefail
+python setup.py build_ext --inplace
+python -c "import fib; fib.fib(1_000)"
