@@ -5,17 +5,14 @@ from typing import Any
 # import PyDict
 from cpython.dict cimport PyDict_Next, PyDict_Size
 from cpython.ref cimport PyObject
+from random import randrange
 
-# Binary search for size of the dict.
-cdef nentries(d):
+cdef linear_nentries(d):
     # Get the dicts dk_nentries
 
     cdef PyObject *key
     cdef PyObject *value
     cdef Py_ssize_t pos = 0
-
-    # d.next(pos, key, value)
-    cdef PyObject v
 
     while PyDict_Next(d, &pos, &key, &value):
         # print(pos, end='\t')
@@ -27,20 +24,23 @@ cdef nentries(d):
     # real_nentries now is the last entry plus one extra.
     real_nentries = pos
     print(f"linear real_nentries: {real_nentries}")
+    return pos
 
-    # We want to find the first entry that's where PyDict_Next returns 0.  For 
-    # an empty dict, that's 0
-    cdef Py_ssize_t guess = PyDict_Size(d) # What about empty?
-    print(f"guess = len: {guess}")
-    # cdef Py_ssize_t upper = 2 * lower
-    # At this point in time, our guesses are unverified.
+# Binary search for size of the dict.
+cdef nentries(d):
+    cdef PyObject *key = NULL
+    cdef PyObject *value = NULL
+    cdef Py_ssize_t pos = 0
+    cdef Py_ssize_t lower, upper
+
+    cdef Py_ssize_t guess = PyDict_Size(d)
     pos = guess
     if not PyDict_Next(d, &pos, &key, &value):
         return guess
     else:
-        # Now lower is verified.
+        # Now invariant is that lower works.
         lower = guess
-        upper = 2 * guess
+        upper = 2 * lower
         pos = upper
         while PyDict_Next(d, &pos, &key, &value):
             lower = upper
@@ -55,18 +55,39 @@ cdef nentries(d):
                 lower = mid
             else:
                 upper = mid
-        print(f"upper: {upper}")
+        # print(f"upper: {upper}")
         return upper
 
+cdef sample(d):
+    n = nentries(d)
+    cdef PyObject *key = NULL
+    cdef PyObject *value = NULL
+    cdef Py_ssize_t pos
+    while True:
+        x = randrange(n)
+        pos = x
+        if PyDict_Next(d, &pos, &key, &value) and x + 1 == pos:
+            return (x, <object> key, <object> value)
+
 def t():
-    # it({'a':'x', 'b': 'y', 'c': 'z'})
-    d = {i*10: str(i) for i in range(10_001)}
-    for i in range(1, 5):
-        d.pop(i*10)
-    nentries(d)
+    nentries({'a':'x', 'b': 'y', 'c': 'z'})
+    d = {i*10+1: str(i) for i in range(10_001)}
+    for i in range(1_000, 8_000):
+        d.pop(i*10+1)
+    print(f"nentries: {nentries(d)}")
     # print(len(d))
     g = nentries({})
     print(f"nentries: {g}")
+    samples = sorted([sample(d) for _ in range(10)])
+    # Below, we try to trigger a resizing.
+    print(f"Sample: {samples}")
+    for _ in range(1_000):
+        d['foo'] = 'bar'
+        d.pop('foo')
+    samples = sorted([sample(d) for _ in range(10)])
+    print(f"Sample: {samples}")
+    print(f"nentries: {nentries(d)}")
+    
 
 def fib(n):
     """Print the Fibonacci series up to n."""
