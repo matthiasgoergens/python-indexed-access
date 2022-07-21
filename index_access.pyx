@@ -8,46 +8,40 @@ from cpython.ref cimport PyObject
 from random import randrange
 
 cdef linear_nentries(d):
-    # Get the dicts dk_nentries
+    """Get the number of dict entries (dk_nentries) via a linear scan"""
 
     cdef PyObject *key
     cdef PyObject *value
     cdef Py_ssize_t pos = 0
 
     while PyDict_Next(d, &pos, &key, &value):
-        # print(pos, end='\t')
-        v = value[0]
-        # v = value[0][0]
-        # print(v, end='\t')
-        # print(v)
-    print()
-    # real_nentries now is the last entry plus one extra.
-    real_nentries = pos
-    print(f"linear real_nentries: {real_nentries}")
+        pass
     return pos
 
-# Binary search for size of the dict.
 cdef nentries(d):
+    """Get the number of dict entries (dk_nentries) via binary search"""
     cdef PyObject *key = NULL
     cdef PyObject *value = NULL
     cdef Py_ssize_t pos = 0
     cdef Py_ssize_t lower, upper
 
+    # Number of entries must be at least `len(d)`
     cdef Py_ssize_t guess = PyDict_Size(d)
     pos = guess
     if not PyDict_Next(d, &pos, &key, &value):
         return guess
     else:
-        # Now invariant is that lower works.
         lower = guess
+        # From now on, `lower` will always be a valid entry.
         upper = 2 * lower
         pos = upper
         while PyDict_Next(d, &pos, &key, &value):
             lower = upper
             upper = 2 * upper
             pos = upper
-        # Now lower is verified to work, and upper is verified to not work.
-        # Just binary search then.
+        # From now on, upper will always stay an invalid entry.
+        # dk_nentries is the first invalid entry.
+        # So let's do binary search:
         while lower + 1 < upper:
             mid = (lower + upper) // 2
             pos = mid
@@ -55,10 +49,10 @@ cdef nentries(d):
                 lower = mid
             else:
                 upper = mid
-        # print(f"upper: {upper}")
         return upper
 
 cdef sample(d):
+    """Random sampling in a dict"""
     n = nentries(d)
     cdef PyObject *key = NULL
     cdef PyObject *value = NULL
@@ -69,7 +63,7 @@ cdef sample(d):
         if PyDict_Next(d, &pos, &key, &value) and x + 1 == pos:
             return (x, <object> key, <object> value)
 
-def t():
+def test_run():
     nentries({'a':'x', 'b': 'y', 'c': 'z'})
     d = {i*10+1: str(i) for i in range(10_001)}
     for i in range(1_000, 8_000):
@@ -87,13 +81,3 @@ def t():
     samples = sorted([sample(d) for _ in range(10)])
     print(f"Sample: {samples}")
     print(f"nentries: {nentries(d)}")
-    
-
-def fib(n):
-    """Print the Fibonacci series up to n."""
-    a, b = 0, 1
-    while b < n:
-        print(b, end=' ')
-        a, b = b, a + b
-
-    print()
