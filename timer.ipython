@@ -1,0 +1,5 @@
+from chris_barker_benchmark import *
+%timeit sample_list(DICT)
+%timeit sample_iter(DICT)
+%timeit sample_iter2(DICT)
+%timeit sample_islice(DICT)
