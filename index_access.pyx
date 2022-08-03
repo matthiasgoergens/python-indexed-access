@@ -51,7 +51,7 @@ cdef nentries(d):
                 upper = mid
         return upper
 
-cdef sample(d):
+def sample(d):
     """Random sampling in a dict"""
     n = nentries(d)
     cdef PyObject *key = NULL
@@ -62,6 +62,10 @@ cdef sample(d):
         pos = x
         if PyDict_Next(d, &pos, &key, &value) and x + 1 == pos:
             return (x, <object> key, <object> value)
+
+
+def entries(d):
+    return nentries(d)
 
 def test_run():
     nentries({'a':'x', 'b': 'y', 'c': 'z'})
