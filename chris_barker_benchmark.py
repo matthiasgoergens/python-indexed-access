@@ -94,6 +94,21 @@ def benchmark_holes():
                 f.write(f"{len(d)} {stop-start}\n")
                 del d[key]
 
+def benchmark_holes_amortised():
+    output_dir = Path('output_holes_amortised')
+    output_dir.mkdir(exist_ok=True)
+    start_size = 100_000
+    with (output_dir / 'benchmark.data').open(mode='at') as f:
+        while True:
+            d = {str(i): i for i in range(start_size)}
+            start = time.perf_counter()
+            while d:
+                (slot, key, value) = ia.sample(d)
+                stop = time.perf_counter()
+                del d[key]
+                f.write(f"{start_size} {len(d)} {stop-start}\n")
+
+
 def main():
     to_run = [
     'b.sample_list(b.DICT)',
@@ -106,8 +121,21 @@ def main():
         run1(what)
         print()
 
+"""
+Idea: explain our runtime with regards to the https://en.wikipedia.org/wiki/Coupon_collector%27s_problem and do benchmarks with it.
+
+(Basically, that's how we do amortised analysis.)
+
+In addition, use a loop of
+  o = object()
+  d[o] = o
+  del o
+to force a resize, when we are getting too sparse.
+"""
+
 if __name__ == '__main__':
     test_sample_islice()
 
-    benchmark_holes()
+    # benchmark_holes()
+    benchmark_holes_amortised()
     # main()
