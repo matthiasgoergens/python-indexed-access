@@ -80,6 +80,20 @@ def benchmark():
         Path('output', f.__name__).open(mode='at').write(f"{size} {stop-start}\n")
 
 
+def benchmark_holes():
+    output_dir = Path('output_holes')
+    output_dir.mkdir(exist_ok=True)
+    start_size = 100_000
+    with (output_dir / 'benchmark.data').open(mode='at') as f:
+        while True:
+            d = {str(i): i for i in range(start_size)}
+            while d:
+                start = time.perf_counter()
+                (slot, key, value) = ia.sample(d)
+                stop = time.perf_counter()
+                f.write(f"{len(d)} {stop-start}\n")
+                del d[key]
+
 def main():
     to_run = [
     'b.sample_list(b.DICT)',
@@ -95,5 +109,5 @@ def main():
 if __name__ == '__main__':
     test_sample_islice()
 
-    benchmark()
+    benchmark_holes()
     # main()

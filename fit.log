@@ -3037,3 +3037,270 @@ correlation matrix of the fit parameters:
                 a4     b4     
 a4              1.000 
 b4             -0.865  1.000 
+
+
+*******************************************************************************
+Thu Aug  4 13:00:41 2022
+
+
+FIT:    data read from 'output_holes/benchmark.data' using 1:2
+        format = x:z
+        #datapoints = 2599832
+        residuals are weighted equally (unit weight)
+
+function used for fitting: holes(x)
+	holes(x) = a0*x + b0
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a0            b0           
+   0 8.6670566704e+15   0.00e+00  4.08e+04    1.000000e+00   1.000000e+00
+   4 1.0958066277e+02  -2.29e+07  4.08e+00   -9.646476e-09   6.442858e-04
+
+The fit was stopped by the user after 4 iterations.
+final sum of squares of residuals : 109.581
+rel. change during last iteration : -228.673
+
+degrees of freedom    (FIT_NDF)                        : 2599830
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00649224
+variance of residuals (reduced chisquare) = WSSR/ndf   : 4.21492e-05
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a0              = -9.64648e-09     +/- 1.395e-10    (1.446%)
+b0              = 0.000644286      +/- 8.054e-06    (1.25%)
+
+correlation matrix of the fit parameters:
+                a0     b0     
+a0              1.000 
+b0             -0.866  1.000 
+
+
+*******************************************************************************
+Thu Aug  4 13:06:48 2022
+
+
+FIT:    data read from 'output_holes/benchmark.data' using 1:2
+        format = x:z
+        #datapoints = 3299929
+        residuals are weighted equally (unit weight)
+
+function used for fitting: holes(x)
+	holes(x) = a0*(100000 - x) + b0
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a0            b0           
+   0 1.0999455473e+16   0.00e+00  4.08e+04    1.000000e+00   1.000000e+00
+   2 7.4851398050e+05  -1.02e+04  4.08e+02   -1.428440e-05   9.523432e-01
+
+The fit was stopped by the user after 2 iterations.
+final sum of squares of residuals : 748514
+rel. change during last iteration : -0.101771
+
+degrees of freedom    (FIT_NDF)                        : 3299927
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.476264
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.226827
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a0              = -1.42844e-05     +/- 9.082e-09    (0.06358%)
+b0              = 0.952343         +/- 0.0005244    (0.05506%)
+
+correlation matrix of the fit parameters:
+                a0     b0     
+a0              1.000 
+b0             -0.866  1.000 
+
+
+*******************************************************************************
+Thu Aug  4 13:07:33 2022
+
+
+FIT:    data read from 'output_holes/benchmark.data' using 1:2
+        format = x:z
+        #datapoints = 3299929
+        residuals are weighted equally (unit weight)
+
+function used for fitting: holes(x)
+	holes(x) = a0*(100000 / x) + b0
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a0            b0           
+   0 5.2658539654e+11   0.00e+00  2.82e+02    1.000000e+00   1.000000e+00
+   3 9.3834500497e+01  -1.15e-01  2.82e-01    1.158185e-05  -1.001219e-04
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 93.8345
+rel. change during last iteration : -1.14776e-06
+
+degrees of freedom    (FIT_NDF)                        : 3299927
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00533248
+variance of residuals (reduced chisquare) = WSSR/ndf   : 2.84353e-05
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a0              = 1.15818e-05      +/- 7.352e-09    (0.06348%)
+b0              = -0.000100122     +/- 2.937e-06    (2.933%)
+
+correlation matrix of the fit parameters:
+                a0     b0     
+a0              1.000 
+b0             -0.030  1.000 
+
+
+*******************************************************************************
+Thu Aug  4 13:12:49 2022
+
+
+FIT:    data read from 'output_holes/benchmark.data' using (100000/$1):2
+        format = x:z
+        #datapoints = 3299929
+        residuals are weighted equally (unit weight)
+
+function used for fitting: holes(x)
+	holes(x) = a0*(100000 / x) + b0
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Thu Aug  4 13:14:16 2022
+
+
+FIT:    data read from 'output_holes/benchmark.data' using (100000/$1):2
+        format = x:z
+        #datapoints = 3299929
+        residuals are weighted equally (unit weight)
+
+function used for fitting: holes(x)
+	holes(x) = a0*x + b0
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a0            b0           
+   0 5.2658539654e+11   0.00e+00  2.82e+02    1.000000e+00   1.000000e+00
+   3 9.3834500497e+01  -1.15e-01  2.82e-01    1.158185e-05  -1.001219e-04
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 93.8345
+rel. change during last iteration : -1.14776e-06
+
+degrees of freedom    (FIT_NDF)                        : 3299927
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00533248
+variance of residuals (reduced chisquare) = WSSR/ndf   : 2.84353e-05
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a0              = 1.15818e-05      +/- 7.352e-09    (0.06348%)
+b0              = -0.000100122     +/- 2.937e-06    (2.933%)
+
+correlation matrix of the fit parameters:
+                a0     b0     
+a0              1.000 
+b0             -0.030  1.000 
+
+
+*******************************************************************************
+Thu Aug  4 13:15:24 2022
+
+
+FIT:    data read from 'output_holes/benchmark.data' using (100000/$1):2
+        format = x:z
+        #datapoints = 3299929
+        residuals are weighted equally (unit weight)
+
+function used for fitting: holes(x)
+	holes(x) = a0*x + b0
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a0            b0           
+   0 5.2658539654e+11   0.00e+00  2.82e+02    1.000000e+00   1.000000e+00
+   3 9.3834500497e+01  -1.15e-01  2.82e-01    1.158185e-05  -1.001219e-04
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 93.8345
+rel. change during last iteration : -1.14776e-06
+
+degrees of freedom    (FIT_NDF)                        : 3299927
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00533248
+variance of residuals (reduced chisquare) = WSSR/ndf   : 2.84353e-05
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a0              = 1.15818e-05      +/- 7.352e-09    (0.06348%)
+b0              = -0.000100122     +/- 2.937e-06    (2.933%)
+
+correlation matrix of the fit parameters:
+                a0     b0     
+a0              1.000 
+b0             -0.030  1.000 
+
+
+*******************************************************************************
+Thu Aug  4 13:18:17 2022
+
+
+FIT:    data read from 'output_holes/benchmark.data' using (100000/$1):2
+        format = x:z
+        #datapoints = 3299929
+        residuals are weighted equally (unit weight)
+
+function used for fitting: holes(x)
+	holes(x) = a0*x + b0
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a0            b0           
+   0 5.2658539654e+11   0.00e+00  2.82e+02    1.000000e+00   1.000000e+00
+   3 9.3834500497e+01  -1.15e-01  2.82e-01    1.158185e-05  -1.001219e-04
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 93.8345
+rel. change during last iteration : -1.14776e-06
+
+degrees of freedom    (FIT_NDF)                        : 3299927
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00533248
+variance of residuals (reduced chisquare) = WSSR/ndf   : 2.84353e-05
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a0              = 1.15818e-05      +/- 7.352e-09    (0.06348%)
+b0              = -0.000100122     +/- 2.937e-06    (2.933%)
+
+correlation matrix of the fit parameters:
+                a0     b0     
+a0              1.000 
+b0             -0.030  1.000 
+
+
+*******************************************************************************
+Thu Aug  4 13:22:10 2022
+
+
+FIT:    data read from 'output_holes/benchmark.data' using (100000/$1):2
+        format = x:z
+        #datapoints = 3299929
+        residuals are weighted equally (unit weight)
+
+function used for fitting: holes(x)
+	holes(x) = a0*x + b0
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a0            b0           
+   0 5.2658539654e+11   0.00e+00  2.82e+02    1.000000e+00   1.000000e+00
+   3 9.3834500497e+01  -1.15e-01  2.82e-01    1.158185e-05  -1.001219e-04
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 93.8345
+rel. change during last iteration : -1.14776e-06
+
+degrees of freedom    (FIT_NDF)                        : 3299927
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00533248
+variance of residuals (reduced chisquare) = WSSR/ndf   : 2.84353e-05
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a0              = 1.15818e-05      +/- 7.352e-09    (0.06348%)
+b0              = -0.000100122     +/- 2.937e-06    (2.933%)
+
+correlation matrix of the fit parameters:
+                a0     b0     
+a0              1.000 
+b0             -0.030  1.000 
