@@ -3,9 +3,9 @@
 import cython
 from typing import Any
 # import PyDict
-from cpython.dict cimport PyDict_Next, PyDict_Size
+from cpython.dict cimport PyDict_Next, PyDict_Size, PyDict_Clear, PyDict_Copy, PyDict_Update
 from cpython.ref cimport PyObject
-from random import randrange
+from random import randrange, getrandbits
 
 cdef linear_nentries(d):
     """Get the number of dict entries (dk_nentries) via a linear scan"""
@@ -63,6 +63,36 @@ def sample(d):
         if PyDict_Next(d, &pos, &key, &value) and x + 1 == pos:
             return (x, <object> key, <object> value)
 
+cdef trigger_resize(d):
+    if nentries(d) > PyDict_Size(d) * 3 + 10:
+        d2 = PyDict_Copy(d)
+        PyDict_Clear(d)
+        PyDict_Update(d, d2)
+        assert nentries(d) == PyDict_Size(d)
+
+
+def sample_with_resize(d):
+    """Random sampling in a dict"""
+    trigger_resize(d)
+    n = nentries(d)
+    cdef PyObject *key = NULL
+    cdef PyObject *value = NULL
+    cdef Py_ssize_t pos
+    while True:
+        x = randrange(n)
+        pos = x
+        # Another idea is to trigger the resize only
+        # when we discover lots of gaps here.
+        # Eg x + 10 < pos or after 10 failed tries in our loop.
+        if PyDict_Next(d, &pos, &key, &value) and x + 1 == pos:
+            return (x, <object> key, <object> value)
+
+def dict_next(d, i):
+    cdef PyObject *key = NULL
+    cdef PyObject *value = NULL
+    cdef Py_ssize_t pos = i
+    has_error = PyDict_Next(d, &pos, &key, &value)
+    return (has_error, pos, <object> key, <object> value)
 
 def entries(d):
     return nentries(d)

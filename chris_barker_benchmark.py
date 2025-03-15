@@ -108,6 +108,62 @@ def benchmark_holes_amortised():
                 del d[key]
                 f.write(f"{start_size} {len(d)} {stop-start}\n")
 
+def benchmark_holes_amortised_with_resize():
+    output_dir = Path('output_holes_amortised_with_resize_3')
+    output_dir.mkdir(exist_ok=True)
+    start_size = 100_000
+    with (output_dir / 'benchmark.data').open(mode='at') as f:
+        for _ in range(100):
+            d = {str(i): i for i in range(start_size)}
+            global_start = time.perf_counter()
+            while d:
+                start = time.perf_counter()
+                (slot, key, value) = ia.sample_with_resize(d)
+                stop = time.perf_counter()
+                del d[key]
+                f.write(f"{start_size} {len(d)} {stop-start} {stop-global_start}\n")
+
+# Semi-pure Python implmeentation.
+
+def maybe_resize(d):
+    if ia.entries(d) > len(d) * 3 + 10:
+        d2 = d.copy()
+        d.clear()
+        d.update(d2)
+
+def pure_sample(d):
+    maybe_resize(d)
+    n = ia.entries(d)
+    while True:
+        i = random.randrange(n)
+        (success, j, k, v) = ia.dict_next(d, i)
+        if success and i + 1 == j:
+            return (i, k, v)
+
+def benchmark_pure():
+    output_dir = Path('output_pure')
+    output_dir.mkdir(exist_ok=True)
+    start_size = 100_000
+    with (output_dir / 'benchmark.data').open(mode='at') as f:
+        for _ in range(10):
+            d = {str(i): i for i in range(start_size)}
+            global_start = time.perf_counter()
+            while d:
+                start = time.perf_counter()
+                (slot, key, value) = pure_sample(d)
+                stop = time.perf_counter()
+                del d[key]
+                f.write(f"{start_size} {len(d)} {stop-start} {stop-global_start}\n")
+
+
+def test_b():
+    d = {str(i): i for i in range(10_000)}
+    while d:
+        (i, k, v) = pure_sample(d)
+        print(k)
+        del d[k]
+
+
 
 def main():
     to_run = [
@@ -134,8 +190,11 @@ to force a resize, when we are getting too sparse.
 """
 
 if __name__ == '__main__':
-    test_sample_islice()
+    # test_sample_islice()
 
     # benchmark_holes()
-    benchmark_holes_amortised()
+    # benchmark_holes_amortised()
+    # benchmark_holes_amortised_with_resize()
     # main()
+    # test_b()
+    benchmark_pure()
